@@ -1,0 +1,34 @@
+import React, { useState } from "react";
+import { render } from "react-dom";
+import * as data from "./messages.json";
+
+// Main App component
+// renders a list of Messages using data from messages.json
+function App() {
+  const arr = ["Banana", "Orange", "Mango", "Banana"];
+  const [checkedItems, setCheckedItems] = useState({});
+  console.log("checkedItems", checkedItems);
+  const handleCheckboxChange = (event, index) => {
+    setCheckedItems({
+      ...checkedItems,
+      [index]: event.target.checked
+    });
+  };
+
+  const items = arr.map((item, index) => (
+    <li key={index}>
+      <input
+        type="checkbox"
+        name={item}
+        checked={checkedItems[index] || false}
+        onChange={(e) => handleCheckboxChange(e, index)}
+      />
+      <span style={{ color: checkedItems[index] ? "red" : "black" }}>
+        {item}
+      </span>
+    </li>
+  ));
+  return <ul>{items}</ul>;
+}
+
+render(<App messages={data.messages} />, document.getElementById("root"));
